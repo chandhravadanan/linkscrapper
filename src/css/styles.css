@@ -1,0 +1,23 @@
+
+.header{
+    margin: 5%
+}
+
+.textBox {
+    width: 70%;
+    margin: 20px;
+}
+
+.Button {
+    width: 10%;
+    margin: 20px;
+}
+
+.Button:hover {
+    background: gray
+}
+
+.container-top{
+    margin-top: 2%
+}
+
