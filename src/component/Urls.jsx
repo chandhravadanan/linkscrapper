@@ -8,14 +8,14 @@ export default class Urls extends React.Component{
         var allUrls = [];
         var id=0;
         this.props.urls.forEach(function(element) {
-             allUrls.push(<div key={id++} className='col-md-12'>{element}</div>)
+             allUrls.push(<div key={id++} className='col-md-12 padlr0 box'><a href={element}>{element}</a></div>)
         }, this);
         return allUrls;
     }
 
     render(){
         return (
-            <div className='row'>
+            <div className='container padlr0'>
                 {this.iterateAndShowAllUrls()}
             </div>
         )

@@ -68,7 +68,11 @@ export default class Container extends Component{
 
     checkAndIncludeLoading(){
         if(this.state.loadSymbol){
-            return <img src={gif} alt='loading...'/>
+            return (
+                <div className='container text-center mrgtop10per'>
+                    <img src={gif} alt='loading...'/>
+                </div>
+            );
         }   
     }
 

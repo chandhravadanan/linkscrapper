@@ -1,13 +1,14 @@
 
 import React, { Component } from 'react';
+import './../css/styles.css';
 
 class Info extends Component{
 
     render(){
         return(
-            <div className="jumbotron">
-                <div className="container">
-                    <h5>Link scrapper extract the urls present in the requested web page.</h5>
+            <div className="top-header">
+                <div className="content">
+                    <div>Link scrapper extract the link present in the requested web page.</div>
                 </div>
             </div>
         )

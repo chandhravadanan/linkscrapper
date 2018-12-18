@@ -28,23 +28,24 @@ class SearchBar extends Component{
 
     render(){
         return(
-            <div className="container" /*style={{'margin-top' : '2%'}}*/ >
-                <div className="row">
-                    <div className="col-md-2 form-control">
-                        <select value={this.state.protocol} onChange={this.handleProtoChange}>
+            <div className="container padlr0">
+                <div className="row col-sm-xs col-md-12 col-lg-12 col-sm-12 padlr0 mrglr0 txt-center">
+                    <div className="col-sm-2 col-md-2 col-lg-2 col-sm-2 padlr0 padtb10">
+                        <select className="select-menu wid-100-per" value={this.state.protocol} onChange={this.handleProtoChange}>
                             <option value='https://'>https://</option>
                             <option value='http://'>http://</option>
-                        </select>
+                        </select>   
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-sm-9 col-md-9 col-lg-9 col-sm-9 padtb10">
                         <input type="text" className="form-control input-lg" 
                                         placeholder="www.google.com" onChange={this.handleUrlChange}/>
                     </div>
-                    <div className="col-md-2">
-                        <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>GO</button>
+                    <div className="col-sm-1 col-md-1 col-lg-1 col-sm-1 padtb10 txt-center padlr0">
+                        <button type="button" className="wid-100-per btn btn-primary" onClick={this.handleSubmit}>GO</button>
                     </div>
+                    
                 </div>
-                {}
+               
             </div>
         );
     }
