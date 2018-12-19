@@ -3,17 +3,14 @@
     width: 100%;
 }
 .top-header .content {
-   /* height: 100px;*/
     padding: 10px;
     font-size: 30px;
     text-align: center;
 }
 
 .select-menu {
-   /* width: 90px;*/
     height: 38px;
-    color:#008000;
-   /* float:right;*/
+    color:#008000;  
 }
 .padlr0 {
     padding-left: 0px;  
