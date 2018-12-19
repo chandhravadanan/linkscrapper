@@ -37,7 +37,7 @@ export default class Container extends Component{
             }) 
             .catch(err => {
                 console.log(err);
-                this.setState({scrappedUrls: []});
+                this.setState({scrappedUrls: [], loadSymbol: false});
             }); 
         this.setState({loadSymbol : true, scrappedUrls:[]});
     }
