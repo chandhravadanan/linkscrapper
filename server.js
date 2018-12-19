@@ -11,4 +11,4 @@ app.get('/*', function(req, res) {
   res.sendFile(path.join(clientResource, 'index.html'));
 });
 
-app.listen(80);
+app.listen(process.env.PORT || 4000);
