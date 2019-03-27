@@ -2,9 +2,9 @@
   "name": "linkscrapper",
   "version": "1.0.0",
   "description": "Scrap the urls in the requested webpage.",
-  "main": "server.js",
+  "main": "/index.js",
   "scripts": {
-    "start": "npm run build && node server.js",
+    "start": "npm run build && node index.js",
     "develop": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -22,11 +22,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
-    "express-cache-response": "^1.0.2",
+    "puppeteer": "^1.13.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-router": "^4.3.1",
-    "react-scripts": "^2.1.1"
+    "react-scripts": "^2.1.1",
+    "websocket": "^1.0.28"
   },
   "browserslist": [
     ">0.2%",

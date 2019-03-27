@@ -2,12 +2,10 @@
 import React, { Component } from 'react';
 import SearchBar from './Searchbar';
 import Viewer from './Urls';
-import axios from 'axios';
+import { w3cwebsocket } from 'websocket';
 import gif from './../images/ajax-loader.gif';
 
 export default class Container extends Component{
-
-    urlMatchRegex = /\s(href|accesskey|background|cite|classid|codebase|data|longdesc|profile|src|usemap|itemtype)=("|')([^"']+)/g
     
     constructor(props){
         super(props);
@@ -15,6 +13,7 @@ export default class Container extends Component{
         this.url = '';
         this.state = {scrappedUrls: []};
         this.onSubmit = this.onSubmit.bind(this);
+        this.client = null; //new w3cwebsocket('ws://localhost:4000/linkscrapper', 'echo-protocol')
     }
 
     handleProtoChange(protocol) {
@@ -25,9 +24,49 @@ export default class Container extends Component{
         this.setState({url: url});
     }
 
+    communicateOverSocket(){
+        if(this.client){
+            this.client.close();
+        }
+        this.client = new w3cwebsocket('ws://localhost:4000/linkscrapper', 'echo-protocol');
+        this.client.onopen = function() {
+            console.log('WebSocket Client Connected');
+            if (this.client.readyState === this.client.OPEN) {
+                this.client.send(JSON.stringify({protocol : this.protocol, url : this.url}));
+            }
+        }.bind(this);
+
+        this.client.onclose = function(){
+            console.log('socket closed')
+            this.setState({loadSymbol : false})
+
+            console.log(this.state);
+        }.bind(this);
+
+        this.client.onmessage = function(e) {
+            if (typeof e.data === 'string') {
+                var scrappedUrls = this.state.scrappedUrls;
+                scrappedUrls.push(e.data)
+                this.setState({loadSymbol : true, scrappedUrls: scrappedUrls})
+            }
+        }.bind(this);
+
+    }
+
     onSubmit(protocol, pathUri){
         this.protocol = protocol;
         this.url = pathUri;
+        this.communicateOverSocket();
+        
+        /*var socket = openSocket('http://localhost:4000')
+        socket.emit('scrap-links', protocol, pathUri);
+        socket.on('scrapped-links', function(scrappedUrl){
+            console.log('recived')
+            var scrappedUrls = curObj.state.scrappedUrls ? curObj.state.scrappedUrls : [];
+            scrappedUrls.push(scrappedUrl);
+            curObj.setState({loadSymbol : false, scrappedUrls:scrappedUrls})
+        })
+        /*
         axios({
             url: 'https://cors.io?'+this.protocol+this.url,
             method: 'GET'
@@ -39,31 +78,8 @@ export default class Container extends Component{
                 console.log(err);
                 this.setState({scrappedUrls: [], loadSymbol: false});
             }); 
+        */
         this.setState({loadSymbol : true, scrappedUrls:[]});
-    }
-    
-    extractUrls(data){
-        var urlSet = new Set();
-        if(data && typeof data==='string'){
-            var domainName = this.url.match('^[^/]+');
-            var protoPrefix = this.protocol;
-            var protocol = protoPrefix.match('^[^/]+');
-            console.log(domainName);
-            data.replace(this.urlMatchRegex, function(){
-                if(arguments.length>3){
-                    var url = arguments[3];
-                    if(url.startsWith('//')){
-                        url = protocol + url;
-                    }else if(url.startsWith('/')){
-                        url = protoPrefix + domainName + url;
-                    }else if(!url.startsWith('http://') &&!url.startsWith('https://')){
-                        url = protoPrefix + domainName + '/' + url;
-                    }
-                    urlSet.add(url);
-                }
-            });
-        }
-        this.setState({loadSymbol : false, scrappedUrls : urlSet});
     }
 
     checkAndIncludeLoading(){

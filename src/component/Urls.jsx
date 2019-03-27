@@ -4,7 +4,6 @@ import React from 'react';
 export default class Urls extends React.Component{
 
     iterateAndShowAllUrls(){
-        console.log(this.props.urls);
         var allUrls = [];
         var id=1;
         this.props.urls.forEach(function(element) {
