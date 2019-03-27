@@ -83,6 +83,7 @@ LinkScrapper.prototype.scrapOnloadResources = async function() {
         curObj.checkAndFinishScrapping();
     })
     var res = await page.goto(this.completeUrl);
+    await page.close();
 }
 
 LinkScrapper.prototype.scrapUrlsFromContent = function(){
