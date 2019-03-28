@@ -13,7 +13,7 @@ export default class Container extends Component{
         this.url = '';
         this.state = {scrappedUrls: []};
         this.onSubmit = this.onSubmit.bind(this);
-        this.socketUrl = location.origin.replace(/^http/, 'ws');
+        this.socketUrl = window.location.origin.replace(/^http/, 'ws');
         this.client = null;
     }
 
@@ -30,7 +30,7 @@ export default class Container extends Component{
             this.client.close();
         }
         console.log('connecting to '+ this.socketUrl);
-        this.client = new w3cwebsocket( socketUrl , 'echo-protocol');
+        this.client = new w3cwebsocket(this.socketUrl , 'echo-protocol');
         this.client.onopen = function() {
             console.log('WebSocket Client Connected');
             if (this.client.readyState === this.client.OPEN) {
