@@ -7,7 +7,7 @@ var browser, page;
 var urlMatchRegex = /\s(href|accesskey|background|cite|classid|codebase|data|longdesc|profile|src|usemap|itemtype)=("|')([^"']+)/g 
 
 async function  init() {
-    browser = await puppeteer.launch(); 
+    browser = await puppeteer.launch({ args: ['--no-sandbox'] }); 
 }
 
 init();

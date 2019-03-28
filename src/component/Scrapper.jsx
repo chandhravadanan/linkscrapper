@@ -13,7 +13,8 @@ export default class Container extends Component{
         this.url = '';
         this.state = {scrappedUrls: []};
         this.onSubmit = this.onSubmit.bind(this);
-        this.client = null; //new w3cwebsocket('ws://localhost:4000/linkscrapper', 'echo-protocol')
+        this.socketUrl = location.origin.replace(/^http/, 'ws');
+        this.client = null;
     }
 
     handleProtoChange(protocol) {
@@ -28,8 +29,8 @@ export default class Container extends Component{
         if(this.client){
             this.client.close();
         }
-        console.log('connecting to '+ window.location.hostname);
-        this.client = new w3cwebsocket('ws://'+ window.location.hostname +'/linkscrapper', 'echo-protocol');
+        console.log('connecting to '+ this.socketUrl);
+        this.client = new w3cwebsocket( socketUrl , 'echo-protocol');
         this.client.onopen = function() {
             console.log('WebSocket Client Connected');
             if (this.client.readyState === this.client.OPEN) {
@@ -58,28 +59,6 @@ export default class Container extends Component{
         this.protocol = protocol;
         this.url = pathUri;
         this.communicateOverSocket();
-        
-        /*var socket = openSocket('http://localhost:4000')
-        socket.emit('scrap-links', protocol, pathUri);
-        socket.on('scrapped-links', function(scrappedUrl){
-            console.log('recived')
-            var scrappedUrls = curObj.state.scrappedUrls ? curObj.state.scrappedUrls : [];
-            scrappedUrls.push(scrappedUrl);
-            curObj.setState({loadSymbol : false, scrappedUrls:scrappedUrls})
-        })
-        /*
-        axios({
-            url: 'https://cors.io?'+this.protocol+this.url,
-            method: 'GET'
-            })
-            .then(response => {
-                this.extractUrls(response.data);
-            }) 
-            .catch(err => {
-                console.log(err);
-                this.setState({scrappedUrls: [], loadSymbol: false});
-            }); 
-        */
         this.setState({loadSymbol : true, scrappedUrls:[]});
     }
 

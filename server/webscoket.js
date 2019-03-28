@@ -11,7 +11,7 @@ module.exports = function(server){
 function spawnSocket(server, path){
     var wsServer = new WebSocketServer({
         httpServer: server,
-        path : path,
+        //path : path,
         //autoAcceptConnections: false
     });
 
