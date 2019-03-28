@@ -28,7 +28,8 @@ export default class Container extends Component{
         if(this.client){
             this.client.close();
         }
-        this.client = new w3cwebsocket('ws://localhost:4000/linkscrapper', 'echo-protocol');
+        console.log('connecting to '+ window.location.hostname);
+        this.client = new w3cwebsocket('ws://'+ window.location.hostname +'/linkscrapper', 'echo-protocol');
         this.client.onopen = function() {
             console.log('WebSocket Client Connected');
             if (this.client.readyState === this.client.OPEN) {
